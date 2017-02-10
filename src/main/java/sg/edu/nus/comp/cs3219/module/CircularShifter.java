@@ -14,6 +14,15 @@ import sg.edu.nus.comp.cs3219.model.LineStorage;
 public class CircularShifter implements Observer {
 	final private LineStorage resultStorage;
 	private Set<String> ignoreWords = new HashSet<>();
+	private Set<String> requiredWords = new HashSet<>();
+
+	public Set<String> getRequiredWords() {
+		return requiredWords;
+	}
+
+	public void setRequiredWords(Set<String> requiredWords) {
+		this.requiredWords = requiredWords;
+	}
 
 	public CircularShifter(LineStorage storage) {
 		resultStorage = storage;
@@ -45,6 +54,9 @@ public class CircularShifter implements Observer {
 	private void doShift(Line line) {
 		for (int i = 0; i < line.size(); i++) {
 			// Ignore shift starting with ignored word.
+			if (!isRequiredWord(line.getWord(i)) && !requiredWords.isEmpty()) {
+				continue;
+			}
 			if (isIgnoreWord(line.getWord(i))) {
 				continue;
 			}
@@ -66,5 +78,9 @@ public class CircularShifter implements Observer {
 	
 	private boolean isIgnoreWord(String word) {
 		return ignoreWords.contains(word.toLowerCase());
+	}
+
+	private boolean isRequiredWord(String word) {
+		return requiredWords.contains(word.toLowerCase());
 	}
 }

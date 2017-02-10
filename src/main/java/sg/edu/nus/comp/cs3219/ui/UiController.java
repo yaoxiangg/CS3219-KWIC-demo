@@ -63,7 +63,7 @@ public class UiController {
 		// Get entered required words from GUI
 		Set<String> requiredWordsSet = view.getRequiredWords();
 		// Run the application
-		List<String> result = controller.run(view.getInput(), ignoredWordsSet);
+		List<String> result = controller.run(view.getInput(), ignoredWordsSet, requiredWordsSet);
 		// Display result
 		view.setResutls(result);
 	}
